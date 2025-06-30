@@ -43,4 +43,24 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <scm>
+        <connection>scm:git:https://github.com/psujewski/java-toolbox.git</connection>
+        <developerConnection>scm:git:git@github.com:psujewski/java-toolbox.git</developerConnection>
+        <url>https://github.com/psujewski/java-toolbox</url>
+        <tag>HEAD</tag>
+    </scm>
+
 </project>

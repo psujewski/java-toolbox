@@ -3,6 +3,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+#maven-release-plugin
+release.properties
+pom.xml.releaseBackup
+
 ### IntelliJ IDEA ###
 .idea/
 
