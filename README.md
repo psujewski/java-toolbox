@@ -3,6 +3,18 @@
 A lightweight Java utility library providing **testable abstractions** and
 **functional-style modeling** for domain logic.
 
+## Installation
+
+Add the following dependency to your pom.xml:
+
+```xml
+<dependency>
+  <groupId>info.psuj.toolbox</groupId>
+  <artifactId>toolbox</artifactId>
+  <version>1.0</version>
+</dependency>
+```
+
 ## Features
 
 * Testable providers for static Java classes (e.g. `Clock`, `UUID`)

@@ -7,6 +7,34 @@
     <groupId>info.psuj</groupId>
     <artifactId>toolbox</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>java-toolbox</name>
+    <description>A lightweight Java utility library providing **testable abstractions** and
+        **functional-style modeling** for domain logic.
+    </description>
+    <url>https://github.com/psujewski/java-toolbox</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>lradzikowski</id>
+            <name>Łukasz Radzikowski</name>
+            <email>radzikowski.l@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/psujewski/java-toolbox.git</connection>
+        <developerConnection>scm:git:git@github.com:psujewski/java-toolbox.git</developerConnection>
+        <url>https://github.com/psujewski/java-toolbox</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -16,6 +44,18 @@
         <assertj-core.version>3.27.2</assertj-core.version>
         <junit-bom.version>5.13.2</junit-bom.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -31,24 +71,42 @@
         </dependency>
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>${junit-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.4</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.1.1</version>
                 <configuration>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                 </configuration>
@@ -56,11 +114,46 @@
         </plugins>
     </build>
 
-    <scm>
-        <connection>scm:git:https://github.com/psujewski/java-toolbox.git</connection>
-        <developerConnection>scm:git:git@github.com:psujewski/java-toolbox.git</developerConnection>
-        <url>https://github.com/psujewski/java-toolbox</url>
-        <tag>HEAD</tag>
-    </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-psujewski</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-psujewski</id>
+            <name>Nexus Release Repository</name>
+            <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>sonatype-psujewski-release</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.8</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
