@@ -21,6 +21,10 @@ import java.util.LinkedList;
 public class FixedUuidProvider implements UuidProvider {
     private final Queue<UUID> queue;
 
+    /**
+     * Creates a FixedUuidProvider returning predefined UUIDs.
+     * @param uuids the UUIDs to return in order
+     */
     public FixedUuidProvider(Iterable<UUID> uuids) {
         this.queue = new LinkedList<>();
         uuids.forEach(queue::add);

@@ -18,10 +18,18 @@ import java.time.ZoneOffset;
 public class FixedTimeProvider implements TimeProvider {
     private final Clock fixedClock;
 
+    /**
+     * Creates a FixedTimeProvider with a specific instant.
+     * @param fixedInstant the fixed point in time
+     */
     public FixedTimeProvider(Instant fixedInstant) {
         this.fixedClock = Clock.fixed(fixedInstant, ZoneOffset.UTC);
     }
 
+    /**
+     * Creates a FixedTimeProvider using a fixed Clock.
+     * @param fixedClock a clock returning a constant instant
+     */
     public FixedTimeProvider(Clock fixedClock) {
         this.fixedClock = fixedClock;
     }

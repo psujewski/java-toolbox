@@ -36,5 +36,10 @@ import java.util.UUID;
  */
 @FunctionalInterface
 public interface UuidProvider {
+
+    /**
+     * Returns a random or predefined UUID.
+     * @return UUID value
+     */
     UUID randomUuid();
 }

@@ -18,6 +18,9 @@ public class SystemTimeProvider implements TimeProvider {
 
     private final Clock clock;
 
+    /**
+     * Default constructor using system UTC clock.
+     */
     public SystemTimeProvider() {
         this.clock = Clock.systemUTC();
     }

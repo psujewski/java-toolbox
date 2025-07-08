@@ -37,11 +37,12 @@ public class Result<T> {
     }
 
     /**
-     * Creates a successful result with a value and optional domain events.
+     * Creates a successful result with optional domain events.
      *
-     * @param entity the returned entity
-     * @param events domain events to be emitted
-     * @return success result with entity and events
+     * @param <T> the type of result
+     * @param entity the main result value
+     * @param events domain events
+     * @return a successful Result
      */
     public static <T> Result<T> success(T entity, DomainEvent... events) {
         Set<DomainEvent> domainEvents = new LinkedHashSet<>(asList(events));
@@ -49,11 +50,12 @@ public class Result<T> {
     }
 
     /**
-     * Creates a successful result with a value and a given set of domain events.
+     * Creates a successful result with predefined domain events.
      *
-     * @param entity the returned entity
-     * @param events set of domain events
-     * @return success result with entity and events
+     * @param <T> the type of result
+     * @param entity the main result value
+     * @param events domain events
+     * @return a successful Result
      */
     public static <T> Result<T> success(T entity, Set<DomainEvent> events) {
         return new Result<>(true, entity, unmodifiableSet(new LinkedHashSet<>(events)), NO_ERRORS);
@@ -90,61 +92,62 @@ public class Result<T> {
     }
 
     /**
-     * Creates a failed result with a given set of error messages.
+     * Creates a failed result with a set of error messages.
      *
-     * @param errorMessages reasons for failure
-     * @return failed result
+     * @param <T> the result type
+     * @param errorMessages failure messages
+     * @return a failed Result
      */
     public static <T> Result<T> failure(Set<String> errorMessages) {
         return new Result<>(false, null, NO_EVENTS, unmodifiableSet(errorMessages));
     }
 
     /**
-     * Creates a failed result with one or more error messages.
+     * Creates a failed result with vararg error messages.
      *
-     * @param errorMessages reasons for failure
-     * @return failed result
+     * @param <T> the result type
+     * @param errorMessages failure messages
+     * @return a failed Result
      */
     public static <T> Result<T> failure(String... errorMessages) {
         return new Result<>(false, null, NO_EVENTS, unmodifiableSet(new LinkedHashSet<>(asList(errorMessages))));
     }
 
     /**
-     * Returns {@code true} if the result represents a successful operation.
+     * Checks if the result indicates success.
+     * @return true if successful
      */
     public boolean isSuccess() {
         return success;
     }
 
     /**
-     * Returns {@code true} if the result represents a failed operation.
+     * Checks if the result indicates failure.
+     * @return true if failed
      */
     public boolean isFailure() {
         return !success;
     }
 
     /**
-     * Returns the result's entity wrapped in {@link Optional}.
-     * <p>
-     * Will be empty for failure results or for success results without a value.
+     * Gets the successful result value if present.
+     * @return the result value
      */
     public Optional<T> entity() {
         return Optional.ofNullable(entity);
     }
 
     /**
-     * Returns an unmodifiable set of domain events.
-     * <p>
-     * Always empty for failure results.
+     * Gets the domain events associated with the result.
+     * @return a set of domain events
      */
     public Set<DomainEvent> events() {
         return events;
     }
 
     /**
-     * Returns an unmodifiable set of error messages.
-     * <p>
-     * Always empty for success results.
+     * Returns the error messages for a failed result.
+     * @return error message set
      */
     public Set<String> errors() {
         return errorMessages;

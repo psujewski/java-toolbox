@@ -35,8 +35,16 @@ import java.time.Instant;
  */
 @FunctionalInterface
 public interface TimeProvider {
+    /**
+     * Exposes the underlying clock.
+     * @return the clock instance
+     */
     Clock clock();
 
+    /**
+     * Returns the current instant from the clock.
+     * @return the current time
+     */
     default Instant now() {
         return Instant.now(clock());
     }
