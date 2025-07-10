@@ -1,9 +1,6 @@
 package info.psuj.toolbox.shared;
 
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import static java.util.Arrays.asList;
@@ -110,7 +107,7 @@ public class Result<T> {
      * @return a failed Result
      */
     public static <T> Result<T> failure(String... errorMessages) {
-        return new Result<>(false, null, NO_EVENTS, unmodifiableSet(new LinkedHashSet<>(asList(errorMessages))));
+        return new Result<>(false, null, NO_EVENTS, unmodifiableSet(new HashSet<>(asList(errorMessages))));
     }
 
     /**
@@ -178,6 +175,7 @@ public class Result<T> {
     public String toString() {
         return "Result{" +
                 "success=" + success +
+                ", entity=" + entity +
                 ", events=" + events +
                 ", errorMessages=" + errorMessages +
                 '}';
@@ -185,18 +183,12 @@ public class Result<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Result<?> result = (Result<?>) o;
-        return success == result.success && Objects.equals(entity, result.entity) && events.equals(result.events) && errorMessages.equals(result.errorMessages);
+        if (!(o instanceof Result<?> result)) return false;
+        return success == result.success && Objects.equals(entity, result.entity) && Objects.equals(events, result.events) && Objects.equals(errorMessages, result.errorMessages);
     }
 
     @Override
     public int hashCode() {
-        int result = Boolean.hashCode(success);
-        result = 31 * result + Objects.hashCode(entity);
-        result = 31 * result + events.hashCode();
-        result = 31 * result + errorMessages.hashCode();
-        return result;
+        return Objects.hash(success, entity, events, errorMessages);
     }
 }

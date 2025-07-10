@@ -34,6 +34,10 @@ public class FixedTimeProvider implements TimeProvider {
         this.fixedClock = fixedClock;
     }
 
+    public static FixedTimeProvider nowAt(Instant instant) {
+        return new FixedTimeProvider(instant);
+    }
+
     @Override
     public Clock clock() {
         return fixedClock;
