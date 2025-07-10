@@ -34,6 +34,12 @@ public class FixedTimeProvider implements TimeProvider {
         this.fixedClock = fixedClock;
     }
 
+    /**
+     * Creates a fixed time provider initialized with the given instant.
+     *
+     * @param instant the fixed point in time to return on each call to {@link #now()}
+     * @return a new instance of {@link FixedTimeProvider}
+     */
     public static FixedTimeProvider nowAt(Instant instant) {
         return new FixedTimeProvider(instant);
     }
